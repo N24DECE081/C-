@@ -7553,7 +7553,6 @@ void FunctionThi(DSCH dsch, int tg, int sct, string monthi, float &diem, CTDT &c
 				}
 				batphim(s,check);
 			}
-			InTB(tb,132,30);
 		}
 		if(s == ESC)
 		{
