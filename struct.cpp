@@ -1,94 +1,22 @@
-#pragma one
-#include<string>
-#include<iostream>
+#pragma once
+#include <string>
+#include <iostream>
 #define MAXMONHOC 100
 #define MAXLOP 10000
 #define MAXDSCTDT 1000
 
 using namespace std;
 
-struct MonHoc {//cây nhị phân
-    string MAMH;        // C15
-    string TENMH;
-    struct DanhSachCauHoi *ds_cauhoi; // con trỏ đến danh sách câu hỏi
-    MonHoc *pLeft;
-    MonHoc *pRight;
-};
-typedef MonHoc* TreeMH;
 
-typedef struct DanhSachMonHoc DSMH;
-
-struct CauTrucDeThi
-{
-	string MASV;
-	string MAMH;
-	float DIEM;
-	int sct;
-	int tg;
-	int *bode;
-	int *dapan;
-};
-typedef struct CauTrucDeThi CTDT;
-
-struct DanhSachDeThi{
-	CTDT DS_CTDT[MAXDSCTDT];
-	int SLDSDT = 0;
-};
-typedef struct DanhSachDeThi DSDT;
-
-struct DiemThi{
-	string MAMH;
-	float DIEM;
-	DiemThi *pNext;
-};
-typedef struct DiemThi NODEDIEMTHI;
-
-struct DanhSachDiem{
-	int SLDiem = 0;
-	NODEDIEMTHI *pHead = NULL;
-	NODEDIEMTHI *pLast = NULL;
-};
-typedef struct DanhSachDiem DSDIEM;
-
-struct SinhVien{
-	string MASV;
-	string TEN;
-	string HO;
-	string PHAI;
-	string PASSWORD;
-	DSDIEM ds_Diem;
-	SinhVien *pNext;
-};
-typedef struct SinhVien NODESV;
-
-struct DanhSachSinhVien{
-	int SLSV = 0;
-	NODESV *pHead = NULL;
-	NODESV *pLast = NULL;
-};
-typedef struct DanhSachSinhVien DSSV;
-
-struct Lop{
-	string MALOP;
-	string TENLOP;
-	DSSV ds_SV;
-};
-typedef struct Lop LOP;
-
-struct DanhSachLop{
-	int SLLOP = 0;
-	LOP *DS_LOP[MAXLOP];
-};
-typedef struct DanhSachLop DSLOP;
-
-struct CauHoi {//dslk đơn
-    int ID;
+struct CauHoi {
+    int ID;                 // ID ngẫu nhiên duy nhất
     string NOIDUNG;
     string A, B, C, D;
-    string DA;
-    CauHoi *pNext;
+    string DA;              // Đáp án đúng
+    int used_count = 0;     // số lần câu hỏi đã được dùng trong đề thi
+    CauHoi* pNext = NULL;
 };
-typedef struct CauHoi *CauHoiNode;
+typedef CauHoi* CauHoiNode;
 
 struct DanhSachCauHoi {
     int SLCH = 0;
@@ -97,9 +25,93 @@ struct DanhSachCauHoi {
 typedef struct DanhSachCauHoi DSCH;
 
 
-struct ThoiGian{
-	int Gio;
-	int Phut;
-	int Giay;
+struct MonHoc {
+    string MAMH;
+    string TENMH;
+    DSCH* ds_cauhoi = NULL;
+    MonHoc* pLeft = NULL;
+    MonHoc* pRight = NULL;
+    int height = 1;  // cần cho AVL tree
+};
+typedef MonHoc* TreeMH;
+
+
+struct DanhSachMonHoc {
+    TreeMH root = NULL;
+    int sl = 0;
+};
+typedef struct DanhSachMonHoc DSMH;
+
+
+struct DiemThi {
+    string MAMH;
+    float DIEM;
+    DiemThi* pNext = NULL;
+};
+typedef struct DiemThi NODEDIEMTHI;
+
+struct DanhSachDiem {
+    int SLDiem = 0;
+    NODEDIEMTHI* pHead = NULL;
+    NODEDIEMTHI* pLast = NULL;
+};
+typedef struct DanhSachDiem DSDIEM;
+
+
+struct SinhVien {
+    string MASV;
+    string TEN;
+    string HO;
+    string PHAI;
+    string PASSWORD;
+    DSDIEM ds_Diem;
+    SinhVien* pNext = NULL;
+};
+typedef struct SinhVien NODESV;
+
+struct DanhSachSinhVien {
+    int SLSV = 0;
+    NODESV* pHead = NULL;
+    NODESV* pLast = NULL;
+};
+typedef struct DanhSachSinhVien DSSV;
+
+
+struct Lop {
+    string MALOP;
+    string TENLOP;
+    DSSV ds_SV;
+};
+typedef struct Lop LOP;
+
+struct DanhSachLop {
+    int SLLOP = 0;
+    LOP* DS_LOP[MAXLOP];
+};
+typedef struct DanhSachLop DSLOP;
+
+
+struct CauTrucDeThi {
+    string MASV;
+    string MAMH;
+    float DIEM;
+    int sct;    // số câu thi
+    int tg;     // thời gian (phút)
+    int* bode = NULL;   // mảng ID câu hỏi
+    int* dapan = NULL;  // mảng đáp án sinh viên
+};
+typedef struct CauTrucDeThi CTDT;
+
+struct DanhSachDeThi {
+    CTDT DS_CTDT[MAXDSCTDT];
+    int SLDSDT = 0;
+};
+typedef struct DanhSachDeThi DSDT;
+
+
+struct ThoiGian {
+    int Gio;
+    int Phut;
+    int Giay;
 };
 typedef struct ThoiGian TG;
