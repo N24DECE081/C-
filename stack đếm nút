@@ -1,0 +1,31 @@
+// ==================== ĐẾM SỐ NÚT CỦA CÂY ====================
+// Duyệt theo thứ tự trung (Inorder Traversal)
+int CountNode(Tree t)
+{
+    if (t == nullptr)
+        return 0;
+
+    stack<Tree> st;
+    Tree current = t;
+    int count = 0;
+
+    while (current != nullptr || !st.empty())
+    {
+        // Duyệt sang trái đến khi hết
+        while (current != nullptr)
+        {
+            st.push(current);
+            current = current->pLeft;
+        }
+
+        // Xử lý node hiện tại
+        current = st.top();
+        st.pop();
+        count++;
+
+        // Duyệt sang phải
+        current = current->pRight;
+    }
+
+    return count;
+}
