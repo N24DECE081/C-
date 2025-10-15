@@ -13,7 +13,7 @@ struct CauHoi {
     string NOIDUNG;
     string A, B, C, D;
     string DA;              // Đáp án đúng
-    int used_count = 0;     // số lần câu hỏi đã được dùng trong đề thi
+    bool daThi;
     CauHoi* pNext = NULL;
 };
 typedef CauHoi* CauHoiNode;
@@ -115,3 +115,4 @@ struct ThoiGian {
     int Giay;
 };
 typedef struct ThoiGian TG;
+
