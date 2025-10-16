@@ -4,6 +4,7 @@
 #define MAXMONHOC 100
 #define MAXLOP 10000
 #define MAXDSCTDT 1000
+#define MAX_ID_POOL 10000000
 
 using namespace std;
 
@@ -13,7 +14,7 @@ struct CauHoi {
     string NOIDUNG;
     string A, B, C, D;
     string DA;              // Đáp án đúng
-    bool daThi;
+    bool daThi;   
     CauHoi* pNext = NULL;
 };
 typedef CauHoi* CauHoiNode;
@@ -21,8 +22,10 @@ typedef CauHoi* CauHoiNode;
 struct DanhSachCauHoi {
     int SLCH = 0;
     CauHoiNode pHead = NULL;
+    CauHoiNode pLast = NULL;
 };
 typedef struct DanhSachCauHoi DSCH;
+
 
 
 struct MonHoc {
@@ -35,12 +38,13 @@ struct MonHoc {
 };
 typedef MonHoc* TreeMH;
 
-
+// Gốc của cây
 struct DanhSachMonHoc {
     TreeMH root = NULL;
-    int sl = 0;
+    int SLMH = 0;
 };
 typedef struct DanhSachMonHoc DSMH;
+
 
 
 struct DiemThi {
@@ -56,6 +60,7 @@ struct DanhSachDiem {
     NODEDIEMTHI* pLast = NULL;
 };
 typedef struct DanhSachDiem DSDIEM;
+
 
 
 struct SinhVien {
@@ -77,6 +82,7 @@ struct DanhSachSinhVien {
 typedef struct DanhSachSinhVien DSSV;
 
 
+
 struct Lop {
     string MALOP;
     string TENLOP;
@@ -89,6 +95,7 @@ struct DanhSachLop {
     LOP* DS_LOP[MAXLOP];
 };
 typedef struct DanhSachLop DSLOP;
+
 
 
 struct CauTrucDeThi {
@@ -116,3 +123,8 @@ struct ThoiGian {
 };
 typedef struct ThoiGian TG;
 
+struct DanhSachID {
+    int nodes[MAX_ID_POOL + 5]; 
+    int n;                      // Tổng số ID trong danh sách
+    int index;                  // Vị trí ID hiện tại (đã dùng đến đâu)
+};
